@@ -10,6 +10,7 @@ process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 //...
 process.env.CADUCIDAD_TOKEN = 60 * 60 * 24 * 30;
 // semilla , la  firma de nuestro  token
+// para subirlo a un servidor , realizamos una  variable semilla en heroku
 process.env.SEED = process.env.SEED || 'VWEICHfnn7328QYHIB5H8bybiusb';
 let url;
 if (process.env.NODE_ENV === 'dev') {
