@@ -4,8 +4,11 @@ const bcrypt = require('bcryptjs');
 const _ = require('underscore');
 //objeto usuario
 const Usuario = require('../modelo/usuario');
+const { verificartoken, verificarrol } = require('../middlewares/autenticacion');
 // servicio  get mostrar usuarios referentes unos filtros
-app.get('/usuario', function(req, res) {
+// los middlewares van como segundo argumento
+app.get('/usuario', verificartoken, (req, res) => {
+
     let desde = req.query.desde || 0;
     desde = Number(desde);
     // parentesis  la condiciones
@@ -32,7 +35,8 @@ app.get('/usuario', function(req, res) {
 
 });
 // servicio post crear nuevo usuarios
-app.post('/usuario', function(req, res) {
+// cuando los middlewares estan en entre[] es  q  debe cumplir  dos condicciones rreferente a la js, autenticacion
+app.post('/usuario', [verificartoken, verificarrol], (req, res) => {
     let body = req.body;
 
     let usuario = new Usuario({
@@ -57,7 +61,7 @@ app.post('/usuario', function(req, res) {
     });
 });
 //el put es muy utilizado para actualizar datos, en esta caso usuario
-app.put('/usuario/:id', function(req, res) {
+app.put('/usuario/:id', [verificartoken, verificarrol], (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
 
@@ -76,7 +80,7 @@ app.put('/usuario/:id', function(req, res) {
 
 });
 // elimnar algun registro
-app.delete('/usuario/:id', function(req, res) {
+app.delete('/usuario/:id', [verificartoken, verificarrol], (req, res) => {
     let id = req.params.id;
     let cambia = {
         estado: false

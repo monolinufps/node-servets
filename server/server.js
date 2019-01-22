@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 // las rutas  de nuestros servicios
-app.use(require('./rutas/usuario'));
+app.use(require('./rutas/index'));
 // conexion con la bd mongobd , puerto =27017 y nombre =test
 mongoose.connect(process.env.URLDB, { useNewUrlParser: true }, (err, res) => {
     if (err) throw err;
